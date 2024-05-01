@@ -3,11 +3,16 @@ import reactLogo from "./assets/react.svg";
 import viteLogo from "/vite.svg";
 import "./App.css";
 
-import ImagePreview from "./ImagePreview";
+import { domToBlob } from "modern-screenshot";
 
 function App() {
-  const [isScreenshoting, setIsScreenshoting] = useState(false);
-  const [urlList, setUrlList] = useState([]);
+  const [url, setUrl] = useState("");
+
+  const onScreenshot = async () => {
+    const blobResult = await domToBlob(document.querySelector("body"));
+    const croppedDataURL = URL.createObjectURL(blobResult);
+    setUrl(croppedDataURL);
+  };
 
   return (
     <>
@@ -21,41 +26,24 @@ function App() {
       </div>
       <h1>Vite + React</h1>
       <div className="card">
-        <button
-          disabled={isScreenshoting}
-          onClick={async () => {
-            setIsScreenshoting(true);
-          }}
-        >
-          SS
-        </button>
-        {isScreenshoting ? (
-          <ImagePreview
-            onEnd={(newImageURL) => {
-              setIsScreenshoting(false);
-              setUrlList((prev) => [...prev, newImageURL]);
-            }}
-          />
-        ) : null}
+        <button onClick={onScreenshot}>SS</button>
       </div>
 
-      <p>List</p>
-
-      <ol>
-        {urlList.map((itm, idx) => (
-          <li key={idx}>
-            <p>Image 1</p>
+      {url ? (
+        <>
+          <p style={{ fontSize: " 50px" }}>Ini buktinya : </p>
+          <div style={{ border: "2px solid red" }}>
             <img
               style={{
-                width: itm.width,
-                height: itm.height,
+                width: "600px",
+                aspectRatio: "16/9",
                 objectFit: "cover",
               }}
-              src={itm.url}
+              src={url}
             />
-          </li>
-        ))}
-      </ol>
+          </div>
+        </>
+      ) : null}
     </>
   );
 }
