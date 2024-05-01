@@ -1,6 +1,4 @@
 import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
 import "./App.css";
 
 import { domToBlob } from "modern-screenshot";
@@ -17,12 +15,17 @@ function App() {
   return (
     <>
       <div id="target">
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+        <img
+          style={{
+            width: "200px",
+            height: "200px",
+          }}
+          src={
+            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSVCzMXks7S3YwWm7bkucoMA2NGAH0xU5uptlN_xEznz0ZhjK6Zv-scNMyWDtNEAQ0_FqY&usqp=CAU"
+          }
+          className="logo"
+          alt="Vite logo"
+        />
       </div>
       <h1>Vite + React</h1>
       <div className="card">
